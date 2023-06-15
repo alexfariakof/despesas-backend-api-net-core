@@ -1,6 +1,7 @@
 using despesas_backend_api_net_core.Infrastructure.Data.Common;
 using despesas_backend_api_net_core.Infrastructure.ExtensionMethods;
 using despesas_backend_api_net_core.Infrastructure.Security.Configuration;
+using Google.Protobuf.WellKnownTypes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -37,9 +38,15 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 
-builder.Services.AddDbContext<RegisterContext>(options =>
-options.UseMySQL(builder.Configuration.GetConnectionString("MySqlConnectionString")));
-
+/*Configuração Database Production*/
+string MySqlConnectionString = "";
+string filePath = "MYSQL_ConnectionString.txt";
+if (File.Exists(filePath))
+{
+    MySqlConnectionString = File.ReadAllText(filePath);
+    builder.Services.AddDbContext<RegisterContext>(options =>
+    options.UseMySQL(MySqlConnectionString));
+}
 
 ConfigureAutorization(builder.Services, builder.Configuration);
 builder.Services.AddRepositories();
@@ -64,7 +71,7 @@ app.UseSwaggerUI(c =>
 });
 //}
 
-app.UseCors(); 
+app.UseCors();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
