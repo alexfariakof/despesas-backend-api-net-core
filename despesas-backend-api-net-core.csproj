@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include=".documents\insert-dados-teste-despesas-receitas.sql" />
     <None Include=".documents\create-procedure-get-saldo-by-idUsuario.sql" />
     <None Include=".documents\create-procedure-lancamento-por-mes-ano.sql" />
     <None Include=".documents\create-procedure-somatorio-por-ano-receitas.sql" />
